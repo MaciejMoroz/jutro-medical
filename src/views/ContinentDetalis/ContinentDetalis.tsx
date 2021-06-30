@@ -10,6 +10,21 @@ interface RouteParams {
   code?: string;
 }
 
+interface languages {
+  name: string;
+}
+interface countries {
+  name: string;
+  languages?: languages[];
+}
+interface continent {
+  name: string;
+  countries: countries[];
+}
+interface IData_COUNTRYS_LIST {
+  continent: continent;
+}
+
 type ContinentDetalisProps = RouteComponentProps<RouteParams>;
 
 const ContinentDetalis: React.FC<ContinentDetalisProps> = () => {
@@ -30,27 +45,28 @@ const ContinentDetalis: React.FC<ContinentDetalisProps> = () => {
       }
     `;
   };
-  const { loading, error, data } = useQuery(GET_COUNTRYS_LIST(params.code));
+  //
+  const { loading, error, data } = useQuery<IData_COUNTRYS_LIST | undefined>(
+    GET_COUNTRYS_LIST(params.code)
+  );
   if (loading) return <Loader />;
   if (error) return <p>Error</p>;
   return (
     <>
       <Paragraph bold>Country list:</Paragraph>
       <StyledUl>
-        {data.continent.countries.map(
-          ({ name, languages }: { name: string; languages: [] }) => (
-            <StyledLi key={name}>
-              <p>
-                {name} -{' '}
-                {languages.map((language, index) => {
-                  if (index === 0) {
-                    return language['name'];
-                  }
-                })}
-              </p>
-            </StyledLi>
-          )
-        )}
+        {data?.continent.countries.map(({ name, languages }) => (
+          <StyledLi key={name}>
+            <p>
+              {name} -{' '}
+              {languages?.map((language, index) => {
+                if (index === 0) {
+                  return language['name'];
+                }
+              })}
+            </p>
+          </StyledLi>
+        ))}
       </StyledUl>
     </>
   );
