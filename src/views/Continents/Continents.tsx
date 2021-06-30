@@ -1,19 +1,28 @@
-import React from 'react'
-import styled from 'styled-components';
-import { useQuery } from "@apollo/client";
-import { GET_CONTINTENT_LIST } from 'GraphQL/Queries'
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_CONTINTENT_LIST } from 'GraphQL/Queries';
+import Loader from 'components/Loader/Loader';
+import { StyledUl, StyledLi } from 'theme/comon.scss';
+import { Paragraph } from 'theme/UI/Text/Text';
 
 const Continents: React.FC = () => {
   const { loading, error, data } = useQuery(GET_CONTINTENT_LIST);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error</p>;
-  return data.continents.map(({ code, name } : {code: string, name: string}) => (
-    <div key={code}>
-      <a href={`continents/${code}`}>
-        {name} - {code}
-      </a>
-    </div>
-  ));
-}
+  return (
+    <>
+      <Paragraph bold>Continent list:</Paragraph>
+      {data.continents.map(({ code, name }: { code: string; name: string }) => (
+        <StyledUl key={code}>
+          <StyledLi>
+            <a href={`continents/${code}`}>
+              {name} - {code}
+            </a>
+          </StyledLi>
+        </StyledUl>
+      ))}
+    </>
+  );
+};
 export default Continents;

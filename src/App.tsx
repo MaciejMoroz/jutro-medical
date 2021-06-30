@@ -1,27 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Theme from 'theme/Theme';
 import { ThemeProvider } from 'styled-components/macro';
 import GlobalStyle from 'theme/GlobalStyle';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 import Continents from 'views/Continents/Continents';
 import ContinentDetalis from 'views/ContinentDetalis/ContinentDetalis';
 
+const Wrapper = styled.div`
+  position: relative;
+  min-width: 100vh;
+  padding: ${({ theme }) => theme.space.base};
+`;
+
 const Nav = styled.nav`
   padding: 20px;
+  text-transform: uppercase;
+  font-weight: ${({ theme }) => theme.fw.bold};
 `;
 
 const NavList = styled.ul`
@@ -35,15 +32,15 @@ const NavElement = styled.li`
 
 const client = new ApolloClient({
   uri: 'https://countries.trevorblades.com',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 const App: React.FunctionComponent = () => {
   return (
-    <>
-      <ApolloProvider client={client}>
-        <GlobalStyle />
-        <ThemeProvider theme={Theme}>
+    <ThemeProvider theme={Theme}>
+      <Wrapper>
+        <ApolloProvider client={client}>
+          <GlobalStyle />
           <Router>
             <>
               <Nav>
@@ -52,27 +49,27 @@ const App: React.FunctionComponent = () => {
                     <Link to="/">Home</Link>
                   </NavElement>
                   <NavElement>
-                    <Link to="/continents">continents</Link>
+                    <Link to="/continents">Continents</Link>
                   </NavElement>
                 </NavList>
               </Nav>
 
               <Switch>
-                <Route exact path="/">
-                </Route>
+                <Route exact path="/"></Route>
                 <Route exact path="/continents">
-                <Continents />
+                  <Continents />
                 </Route>
-                {/* <Route exact path="/continents/:code">
-                  <ContinentDetalis />
-                </Route> */}
-                <Route exact path='/continents/:code' component={ContinentDetalis}/>
+                <Route
+                  exact
+                  path="/continents/:code"
+                  component={ContinentDetalis}
+                />
               </Switch>
             </>
           </Router>
-        </ThemeProvider>
-      </ApolloProvider>
-    </>
+        </ApolloProvider>
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 
