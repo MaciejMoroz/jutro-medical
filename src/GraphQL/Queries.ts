@@ -8,14 +8,3 @@ export const GET_CONTINTENT_LIST = gql`
   }
 }
 `;
-
-export const GET_COUNTRYS_LIST = gql`
-{
-  continent(code: "EU") {
-    name
-    countries{
-      name
-    }
-	}
-}
-`;

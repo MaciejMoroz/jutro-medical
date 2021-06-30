@@ -1,9 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import {
-  useQuery,
-  gql
-} from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_CONTINTENT_LIST } from 'GraphQL/Queries'
 
 const Continents: React.FC = () => {

@@ -18,6 +18,7 @@ import {
 } from "@apollo/client";
 
 import Continents from 'views/Continents/Continents';
+import ContinentDetalis from 'views/ContinentDetalis/ContinentDetalis';
 
 const Nav = styled.nav`
   padding: 20px;
@@ -55,15 +56,17 @@ const App: React.FunctionComponent = () => {
                   </NavElement>
                 </NavList>
               </Nav>
+
               <Switch>
                 <Route exact path="/">
                 </Route>
                 <Route exact path="/continents">
                 <Continents />
                 </Route>
-                <Route exact path="/continents/:code">
-                  /continents/:code
-                </Route>
+                {/* <Route exact path="/continents/:code">
+                  <ContinentDetalis />
+                </Route> */}
+                <Route exact path='/continents/:code' component={ContinentDetalis}/>
               </Switch>
             </>
           </Router>
