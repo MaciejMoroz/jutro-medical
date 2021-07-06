@@ -6,6 +6,7 @@ import Loader from 'components/Loader/Loader';
 import { StyledLi } from 'theme/comon.scss';
 import { Paragraph } from 'theme/UI/Text/Text';
 import { GET_COUNTRYS_LIST } from 'GraphQL/Queries';
+import NotFoundPage from 'views/NotFoundPage/NotFoundPage';
 
 const GridWrapper = styled.div`
   display: grid;
@@ -60,7 +61,7 @@ const ContinentDetalis: React.FC<ContinentDetalisProps> = () => {
       <>
         <Paragraph bold>Country list:</Paragraph>
         <GridWrapper>
-          {data &&
+          {data && data.continent != null ? (
             splitToChunks(data.continent.countries, 3).map((chunk) => {
               return (
                 <GridCol>
@@ -72,7 +73,10 @@ const ContinentDetalis: React.FC<ContinentDetalisProps> = () => {
                   ))}
                 </GridCol>
               );
-            })}
+            })
+          ) : (
+            <NotFoundPage />
+          )}
         </GridWrapper>
       </>
     );
