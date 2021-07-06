@@ -8,6 +8,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 import Continents from 'views/Continents/Continents';
 import ContinentDetalis from 'views/ContinentDetalis/ContinentDetalis';
+import NotFoundPage from 'views/NotFoundPage/NotFoundPage';
 
 const Wrapper = styled.div`
   position: relative;
@@ -64,6 +65,7 @@ const App: React.FunctionComponent = () => {
                   path="/continents/:code"
                   component={ContinentDetalis}
                 />
+                <Route component={NotFoundPage} />
               </Switch>
             </>
           </Router>

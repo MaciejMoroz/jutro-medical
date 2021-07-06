@@ -4,13 +4,14 @@ import { GET_CONTINTENT_LIST } from 'GraphQL/Queries';
 import Loader from 'components/Loader/Loader';
 import { StyledUl, StyledLi } from 'theme/comon.scss';
 import { Paragraph } from 'theme/UI/Text/Text';
+import { Link } from 'react-router-dom';
 
-interface continents {
+interface IContinent {
   name: string;
   code: string;
 }
 interface IData_CONTINTENT_LIST {
-  continents: continents[];
+  continents: IContinent[];
 }
 
 const Continents: React.FC = () => {
@@ -23,17 +24,15 @@ const Continents: React.FC = () => {
   return (
     <>
       <Paragraph bold>Continent list:</Paragraph>
-      {data?.continents.map(
-        ({ code, name }: { code: string; name: string }) => (
-          <StyledUl key={code}>
-            <StyledLi>
-              <a href={`continents/${code}`}>
-                {name} - {code}
-              </a>
-            </StyledLi>
-          </StyledUl>
-        )
-      )}
+      {data?.continents.map(({ code, name }) => (
+        <StyledUl key={code}>
+          <StyledLi>
+            <Link to={`continents/${code}`}>
+              {name} - {code}
+            </Link>
+          </StyledLi>
+        </StyledUl>
+      ))}
     </>
   );
 };
